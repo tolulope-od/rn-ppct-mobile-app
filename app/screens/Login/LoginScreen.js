@@ -4,6 +4,9 @@ import styles from "./styles";
 import React, { Component } from "react";
 import { Text, View } from "react-native";
 import { Button } from "react-native-elements";
+import { LinearGradient } from "expo";
+
+import Login from "../../components/Login/Login";
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -12,17 +15,9 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>This is the Login Screen</Text>
-        <Button
-          title="Forgot Password?"
-          onPress={() => this.props.navigation.navigate("PasswordResetScreen")}
-        />
-        <Button
-          title="Log In"
-          onPress={() => this.props.navigation.navigate("HomeScreen")}
-        />
-      </View>
+      <LinearGradient colors={["#8EC5FC", "#E0C3FC"]} style={styles.container}>
+        <Login />
+      </LinearGradient>
     );
   }
 }

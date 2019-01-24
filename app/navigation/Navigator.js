@@ -8,6 +8,9 @@ import BurgerMenu from "../components/BurgerMenu";
 import PasswordResetScreen from "../screens/PasswordReset";
 import RegisterScreen from "../screens/Register";
 import TaskScreen from "../screens/Tasks";
+import ClientScreen from "../screens/Clients";
+import AddClientScreen from "../screens/AddClient";
+import ClientViewScreen from "../screens/ViewClient";
 
 import React from "react";
 
@@ -42,7 +45,8 @@ const HomeStack = createStackNavigator(
   {
     DetailScreen,
     HomeScreen,
-    OptionsScreen
+    OptionsScreen,
+    AddClientScreen
   },
   {
     initialRouteName: "HomeScreen",
@@ -103,6 +107,35 @@ TaskStack.navigationOptions = ({ navigation }) => {
   };
 };
 
+const ClientsStack = createStackNavigator(
+  {
+    ClientScreen,
+    ClientViewScreen,
+    AddClientScreen
+  },
+  {
+    initialRouteName: "ClientScreen"
+  }
+);
+
+ClientsStack.navigationOptions = ({ navigation }) => {
+  let drawerLockMode = "unlocked";
+  if (navigation.state.index > 0) {
+    drawerLockMode = "lock-closed";
+  }
+  return {
+    tabBarLabel: "Clients",
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="ios-contacts" type="ionicon" color={tintColor} />
+    ),
+    drawerLockMode,
+    drawerLabel: "Clients",
+    drawerIcon: ({ tintColor }) => (
+      <Icon name="ios-contacts" type="ionicon" color={tintColor} />
+    )
+  };
+};
+
 const SettingsStack = createStackNavigator({ SettingsScreen });
 
 SettingsStack.navigationOptions = {
@@ -118,11 +151,11 @@ SettingsStack.navigationOptions = {
 
 const MainNavigator = Platform.select({
   ios: createDrawerNavigator(
-    { HomeStack, TaskStack, SettingsStack },
+    { HomeStack, TaskStack, ClientsStack, SettingsStack },
     { contentComponent: BurgerMenu }
   ),
   android: createDrawerNavigator(
-    { HomeStack, TaskStack, SettingsStack },
+    { HomeStack, TaskStack, ClientsStack, SettingsStack },
     { contentComponent: BurgerMenu }
   )
 });
@@ -144,24 +177,31 @@ LoginStack.navigationOptions = ({ navigation }) => {
       });
       return <Icon name={iconName} type="ionicon" color={tintColor} />;
     },
-    tabBarVisible
+    tabBarVisible,
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#E0C3FC",
+        borderTopColor: "transparent"
+      }
+    }
   };
 };
 
 const AuthTabs = createBottomTabNavigator({ LoginStack, RegisterScreen });
 
-const RootSwitch = createSwitchNavigator(
-  {
-    LoadingScreen,
-    AuthTabs,
-    MainNavigator
-  }
-  /*
-  // use this if the log in stack isn't configured yet
-  {
-    initialRouteName: "MainNavigator"
-  }*/
-);
-const AppRootSwitch = createAppContainer(RootSwitch);
+const RootSwitch = createAppContainer(
+  createSwitchNavigator(
+    {
+      LoadingScreen,
+      AuthTabs,
+      MainNavigator
+    },
 
-export default AppRootSwitch;
+    // use this if the log in stack isn't configured yet
+    {
+      initialRouteName: "MainNavigator"
+    }
+  )
+);
+
+export default RootSwitch;

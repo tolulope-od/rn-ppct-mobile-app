@@ -110,7 +110,9 @@ class Dashboard extends Component {
                   }}>
                   <TouchableOpacity
                     style={{ alignSelf: "center" }}
-                    onPress={() => this.props.navigation.navigate("Client")}>
+                    onPress={() =>
+                      this.props.navigation.navigate("AddClientScreen")
+                    }>
                     <AntDesignIcon
                       name="addusergroup"
                       color="#7B4EF5"
@@ -152,7 +154,9 @@ class Dashboard extends Component {
                   }}>
                   <TouchableOpacity
                     style={{ alignSelf: "center" }}
-                    onPress={() => this.props.navigation.navigate("Dashboard")}>
+                    onPress={() =>
+                      this.props.navigation.navigate("OptionsScreen")
+                    }>
                     <MaterialCommunityIcon
                       name="view-dashboard-outline"
                       color="#7B4EF5"
@@ -247,6 +251,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 100 + "%",
     height: 100 + "%",
+    justifyContent: "center",
     backgroundColor: "rgb(231, 234, 237)"
   },
   btn: {
