@@ -160,9 +160,9 @@ const MainNavigator = Platform.select({
   )
 });
 
-const LoginStack = createStackNavigator({ LoginScreen, PasswordResetScreen });
+const Login = createStackNavigator({ LoginScreen, PasswordResetScreen });
 
-LoginStack.navigationOptions = ({ navigation }) => {
+Login.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
     tabBarVisible = false;
@@ -172,7 +172,7 @@ LoginStack.navigationOptions = ({ navigation }) => {
     tarBarLabel: "Log In",
     tabBarIcon: ({ tintColor }) => {
       let iconName = Platform.select({
-        ios: "ios-log-in",
+        ios: "md-log-in",
         android: "md-log-in"
       });
       return <Icon name={iconName} type="ionicon" color={tintColor} />;
@@ -187,7 +187,34 @@ LoginStack.navigationOptions = ({ navigation }) => {
   };
 };
 
-const AuthTabs = createBottomTabNavigator({ LoginStack, RegisterScreen });
+const Register = createStackNavigator({ RegisterScreen });
+
+Register.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tarBarLabel: "Log In",
+    tabBarIcon: ({ tintColor }) => {
+      let iconName = Platform.select({
+        ios: "ios-person-add",
+        android: "ios-person-add"
+      });
+      return <Icon name={iconName} type="ionicon" color={tintColor} />;
+    },
+    tabBarVisible,
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#E0C3FC",
+        borderTopColor: "transparent"
+      }
+    }
+  };
+};
+
+const AuthTabs = createBottomTabNavigator({ Login, Register });
 
 const RootSwitch = createAppContainer(
   createSwitchNavigator(
@@ -199,7 +226,7 @@ const RootSwitch = createAppContainer(
 
     // use this if the log in stack isn't configured yet
     {
-      initialRouteName: "MainNavigator"
+      // initialRouteName: "MainNavigator"
     }
   )
 );
